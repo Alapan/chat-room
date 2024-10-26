@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:14.3
+    command: ['postgres', '-c', 'log_statement=all']
+    restart: always
+    container_name: chatdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=passw0rd
+      - POSTGRES_DB=postgres
+    ports:
+      - "6000:5432"
