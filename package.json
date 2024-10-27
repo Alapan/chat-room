@@ -2,25 +2,33 @@
   "name": "chat-room",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ladle": "npx ladle serve",
+    "seed": "npx prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^5.21.1",
     "next": "15.0.1",
-    "react": "19.0.0-rc-69d4b800-20241021",
-    "react-dom": "19.0.0-rc-69d4b800-20241021"
+    "react": "18.3",
+    "react-dom": "18.3"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@ladle/react": "^4.1.2",
+    "@types/node": "^20.17.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.1",
     "prisma": "^5.21.1",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "prisma": {
+    "seed": "node --loader ts-node/esm src/prisma/seed.ts"
   }
 }
