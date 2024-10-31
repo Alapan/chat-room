@@ -1,0 +1,57 @@
+.chatRoomList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chatRoomListItem {
+  width: 80vw;
+  box-sizing: border-box;
+  border: 2px solid black;
+  margin-block-end: 2rem;
+  padding-block: 1rem;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 0.25fr 1fr;
+  grid-template-rows: 1fr;
+  position: relative;
+  transition: all .2s ease-in-out;
+}
+
+.chatRoomListItem:hover {
+  transform: scale(1.05);
+}
+
+.chatRoomListItem::after {
+  content: '';
+  width: 0;
+  height: 0;
+  display: block;
+  border: 30px solid transparent;
+  border-left-color: aqua;
+  position: absolute;
+  right: 0;
+}
+
+@media (min-width: 640px) {
+  .chatRoomListItem {
+    width: 60vw;
+  }
+}
+
+.iconContainer {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.topicContainer {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.topic {
+  font-size: 1.5rem;
+}
