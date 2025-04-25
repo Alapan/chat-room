@@ -6,11 +6,13 @@ To run the development server:
 npm run dev
 ```
 
-To run ladle:
+To run storybook:
 
 ```bash
-npm run ladle
+npm run storybook
 ```
+
+Then open localhost:6006 to see the result
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
