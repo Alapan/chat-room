@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ChatRoomList } from "./components/ChatRoomList";
+import { ChatRoomList } from './components/ChatRoomList';
 
 export default function Home() {
   return (
