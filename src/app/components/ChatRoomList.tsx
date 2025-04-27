@@ -35,7 +35,7 @@ export const ChatRoomList = () =>  {
     if (error) return <div className="text-center text-red-500">{error}</div>;
 
     return (
-        <div className="w-full max-w-3xl flex flex-col gap-4">
+        <div className="w-full max-w-3xl flex flex-col justify-center gap-4">
             {chatRooms.length > 0 ? (
                 chatRooms.map((room) => (
                     <Link href={`/chatroom/${room.id}`} key={room.id}>
