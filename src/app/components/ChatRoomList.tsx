@@ -3,14 +3,7 @@
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import { ListItem } from "./ListItem";
-
-
-interface ChatRoom {
-    id: number;
-    topic: string;
-    description: string;
-    image: string | null;
-}
+import { ChatRoom } from "@/app/types";
 
 export const ChatRoomList = () =>  {
     const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
