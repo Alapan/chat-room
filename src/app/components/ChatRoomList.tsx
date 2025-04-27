@@ -1,50 +1,26 @@
-"use client";
+import Link from 'next/link';
+import { ListItem } from './ListItem';
+import { ChatRoom } from '@/app/types';
 
-import Link from "next/link";
-import {useEffect, useState} from "react";
-import { ListItem } from "./ListItem";
-import { ChatRoom } from "@/app/types";
+export const ChatRoomList = async () =>  {
+  const res = await fetch(`${process.env.BASE_API_URL}/api/chatrooms`);
 
-export const ChatRoomList = () =>  {
-    const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  if (!res.ok) {
+    throw new Error('Failed to fetch chat rooms');
+  }
+  const chatRooms: ChatRoom[] = await res.json();
 
-    useEffect(() => {
-        const fetchChatRooms = async () => {
-            try {
-                const response = await fetch('/api/chatrooms');
-                if (!response.ok) {
-                    setError('Error loading chat rooms');
-                    return;
-                }
-                const data = await response.json();
-                setChatRooms(data);
-            } catch (err) {
-                setError('Error loading chat rooms');
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchChatRooms();
-    }, []);
-
-    if (loading) return <div className="text-center">Loading chat rooms...</div>;
-    if (error) return <div className="text-center text-red-500">{error}</div>;
-
-    return (
-        <div className="w-full max-w-3xl flex flex-col justify-center gap-4">
-            {chatRooms.length > 0 ? (
-                chatRooms.map((room) => (
-                    <Link href={`/chatroom/${room.id}`} key={room.id}>
-                        <ListItem topic={room.topic} description={room.description} />
-                    </Link>
-                ))
-            ) : (
-                <div className="text-center">No chat rooms available</div>
-            )}
-        </div>
-    );
+  return (
+    <div className='w-full max-w-3xl flex flex-col justify-center gap-4'>
+      {chatRooms.length > 0 ? (
+        chatRooms.map((room) => (
+          <Link href={`/chatroom/${room.id}`} key={room.id}>
+            <ListItem topic={room.topic} description={room.description} />
+          </Link>
+        ))
+      ) : (
+        <div className='text-center'>No chat rooms available</div>
+      )}
+    </div>
+  );
 };
