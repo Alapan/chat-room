@@ -1,12 +1,18 @@
 ## Getting Started
 
-To run the development server:
+1. Start docker locally and run:
+
+```bash
+docker-compose up -d
+```
+
+2. To run the development server:
 
 ```bash
 npm run dev
 ```
 
-To run storybook:
+3. To run storybook:
 
 ```bash
 npm run storybook
