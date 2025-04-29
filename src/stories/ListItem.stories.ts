@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { ListItem } from '@/app/components/ListItem';
 
 export default {
-  title: 'Example/ListItem',
+  title: 'Components/ListItem',
   component: ListItem,
   tags: ['autodocs'],
   argTypes: {
