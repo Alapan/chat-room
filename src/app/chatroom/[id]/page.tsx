@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { ChatRoom } from "@/app/types";
+import {InputMessageBox} from "@/app/components/InputMessageBox";
 
 export default function ChatRoomPage() {
     const params = useParams();
@@ -41,7 +42,9 @@ export default function ChatRoomPage() {
         <div className="p-8">
             <h1 className="text-3xl font-bold mb-4">{chatRoom.topic}</h1>
             <p className="mb-6">{chatRoom.description}</p>
-            {/* Add chat functionality here */}
+            {/* Messages history */}
+
+            <InputMessageBox onClick={() => {}}></InputMessageBox>
         </div>
     );
 }
