@@ -8,38 +8,47 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  name        String    @db.VarChar(255)
-  createdAt   DateTime  @default(now())
-  messages    Message[]
-  chatRooms   ChatRoom_User[]
+  id        Int             @id @default(autoincrement())
+  name      String          @db.VarChar(255)
+  email     String          @unique @db.VarChar(255)
+  password  String          @db.VarChar(255)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime?
+  isActive  Boolean         @default(true)
+  messages  Message[]
+  chatRooms ChatRoom_User[]
 }
 
 model ChatRoom {
-  id          Int       @id @default(autoincrement())
-  topic       String    @unique @db.VarChar(255)
-  image       String    @db.VarChar(255)
-  description String    @db.VarChar(255)
+  id          Int             @id @default(autoincrement())
+  topic       String          @unique @db.VarChar(255)
+  image       String          @db.VarChar(255)
+  description String          @db.VarChar(255)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime?
+  isActive    Boolean         @default(true)
   messages    Message[]
   users       ChatRoom_User[]
 }
 
 model Message {
-  id          Int       @id @default(autoincrement())
-  text        String    @db.VarChar(1000)
-  sentAt      DateTime
-  sentBy      User      @relation(fields: [userId], references: [id])
-  userId      Int
-  belongsTo   ChatRoom  @relation(fields: [chatRoomId], references: [id])
-  chatRoomId  Int
+  id         Int      @id @default(autoincrement())
+  text       String   @db.VarChar(1000)
+  sentAt     DateTime
+  sentBy     User     @relation(fields: [userId], references: [id])
+  userId     Int
+  belongsTo  ChatRoom @relation(fields: [chatRoomId], references: [id])
+  chatRoomId Int
 }
 
 model ChatRoom_User {
-  chatRoom    ChatRoom  @relation(fields: [chatRoomId], references: [id])
+  chatRoom    ChatRoom @relation(fields: [chatRoomId], references: [id])
   chatRoomId  Int
-  user        User      @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
   userId      Int
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime @default(now())
+  isAdmin     Boolean  @default(false)
+  isModerator Boolean  @default(false)
 
   @@id([userId, chatRoomId])
 }
