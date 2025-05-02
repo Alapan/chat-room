@@ -32,7 +32,7 @@ export async function GET(_: NextRequest, context: { params: { id: string } }) {
         }
         return NextResponse.json(chatMessages);
     } catch (error) {
-        console.warn(error);
+        console.log(error);
         return NextResponse.json({ error: 'Fetching chat messages failed' }, { status: 500 });
     }
 }
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest, context: { params: { id: string
 
         return NextResponse.json(newMessage);
     } catch (error) {
-        console.warn(error);
+        console.log(error);
         return NextResponse.json({ error: 'Sending message failed' }, { status: 500 });
     }
 }
