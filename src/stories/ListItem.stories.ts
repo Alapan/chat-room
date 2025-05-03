@@ -17,8 +17,8 @@ export default {
       description: 'The description of the list item',
       defaultValue: 'Sample description',
     },
-  } as Meta
-};
+  },
+} as Meta<typeof ListItem>;
 
 type Story = StoryObj<typeof ListItem>;
 type ListItemProps = React.ComponentProps<typeof ListItem>;
@@ -28,14 +28,14 @@ export const Default: Story = {
     topic: 'Sample topic',
     description: 'Sample description',
   } as ListItemProps,
-};
+} as Story;
 
 export const LongTopic: Story = {
   args: {
     topic: 'This is a very long topic that should be truncated',
     description: 'Sample description',
   } as ListItemProps,
-};
+} as Story;
 
 export const LongDescription: Story = {
   args: {
@@ -43,4 +43,4 @@ export const LongDescription: Story = {
     description:
       'This is a very long description that should be truncated when it exceeds the maximum width of the container. This is a very long description that should be truncated when it exceeds the maximum width of the container.',
   } as ListItemProps,
-};
+} as Story;

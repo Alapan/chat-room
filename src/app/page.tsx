@@ -1,28 +1,42 @@
-import Image from 'next/image';
-import { ChatRoomList } from './components/ChatRoomList';
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+
+import { Button } from './components/Button';
 
 export default function Home() {
+  const { rive, RiveComponent} = useRive({
+    src: '/chat.riv',
+    autoplay: true,
+    artboard: 'Artboard',
+    stateMachines: ['State Machine 1'],
+  });
+  const isMovingInput = useStateMachineInput(rive, 'State Machine 1', 'isMoving');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isMovingInput) {
+      isMovingInput.value = true;
+    }
+  }, [isMovingInput]);
+
+  const handleClick = () => {
+    router.push('/login');
+  }
+
   return (
     <main className='container w-full mx-auto flex flex-col h-screen mt-4 mb-6'>
       <div className='mx-6'>
-        <div className='flex flex-row justify-center text-6xl'>
-          <span className='font-bold text-green'>Chat</span>
-          <span className='font-light text-green pr-4'>Hub</span>
-          <Image
-            src='speech-bubble.svg'
-            width={50}
-            height={50}
-            alt='Chat Hub Logo'
-          />
-        </div>
-        <div className='flex flex-row justify-center text-2xl'>
-          <span className='font-cursive text-green'>Chat anytime, for free.</span>
-        </div>
-        <div className='flex flex-row justify-center text-2xl my-6'>
-          <span className='font-normal'>Click a topic from the list to enter the chatroom.</span>
-        </div>
-        <div className='flex flex-col items-center gap-4 my-4'>
-          <ChatRoomList />
+        <div className='flex flex-col justify-center item-center m-auto my-8 w-full size-140'>
+          <RiveComponent/>
+          <div className='m-auto mt-4 p-4 w-full max-w-sm'>
+            <Button label='Login' onClick={handleClick}/>
+          </div>
+          <span className='text-center text-gray-500 text-sm mt-2'>
+            Don't have an account?<a href='/register' className='text-green hover:text-green font-bold'> Register.</a>
+          </span>
         </div>
       </div>
     </main>
