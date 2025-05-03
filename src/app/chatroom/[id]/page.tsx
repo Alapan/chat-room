@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { ChatRoom } from "@/app/types";
+import {useEffect, useState} from 'react';
+import {useParams} from 'next/navigation';
+import {ChatRoom} from "@/app/types";
 import {InputMessageBox} from "@/app/components/InputMessageBox";
 
 export default function ChatRoomPage() {
@@ -44,7 +44,8 @@ export default function ChatRoomPage() {
             <p className="mb-6">{chatRoom.description}</p>
             {/* Messages history */}
 
-            <InputMessageBox onClick={() => {}}></InputMessageBox>
+            <InputMessageBox onClickAction={() => {
+            }}></InputMessageBox>
         </div>
     );
 }
