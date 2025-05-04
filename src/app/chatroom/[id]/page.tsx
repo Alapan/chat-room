@@ -4,13 +4,14 @@ import {useEffect, useState} from 'react';
 import {useParams} from 'next/navigation';
 import {ChatRoom} from "@/app/types";
 import {InputMessageBox} from "@/app/components/InputMessageBox";
+import { LoadingIndicator } from '@/app/components/LoadingIndicator';
 
 export default function ChatRoomPage() {
     const params = useParams();
     const id = params.id;
 
     const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -27,14 +28,14 @@ export default function ChatRoomPage() {
                 setError('Error loading chat room');
                 console.error(err);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchChatRoom();
     }, [id]);
 
-    if (loading) return <div className="text-center">Loading chat room...</div>;
+    if (isLoading) return <LoadingIndicator isLoading={isLoading} loadingText='Loading chat room...'/>
     if (error) return <div className="text-center text-red-500">{error}</div>;
     if (!chatRoom) return <div className="text-center">Chat room not found</div>;
 

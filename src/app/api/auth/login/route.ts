@@ -2,7 +2,7 @@ import {PrismaClient} from '@prisma/client';
 import {NextRequest, NextResponse} from 'next/server';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {z} from "zod";
+import { loginSchema } from '@/app/common/loginSchema';
 
 interface LoginUser {
     email: string;
@@ -11,27 +11,6 @@ interface LoginUser {
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || '34ab287f-44c6-4a62-a828-9989f605aefe';
-
-// model validation rules
-const loginSchema = z.object({
-    email: z.string()
-        .nonempty({message: "Email is required"})
-        .email({message: "Must be a valid email address"})
-        .max(50, {message: "Email must be at most 50 characters long"}),
-    password: z.string()
-        .nonempty({message: "Password is required"})
-        .min(6, {message: "Password must be at least 5 characters long"})
-        .max(15, {message: "Password must be at most 15 characters long"})
-        .refine((password) => /[A-Z]/.test(password),
-            {message: "Password must be include at least 1 uppercase letter"})
-        .refine((password) => /[a-z]/.test(password),
-            {message: "Password must be include at least 1 lowercase letter"})
-        .refine((password) => /[0-9]/.test(password),
-            {message: "Password must be include at least 1 number"})
-        .refine((password) => /[!@#$%^&*]/.test(password), {
-            message: "Password must be include at least 1 of these special characters: !@#$%^&*",
-        }),
-});
 
 export async function POST(request: NextRequest) {
     try {
