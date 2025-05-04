@@ -5,12 +5,6 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/stories/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  theme: {
-    fontFamily: {
-      regular: ['Inconsolata-Regular'],
-      bold: ['Incolsolata-Bold'],
-    },
-  },
   plugins: [],
 };
 export default config;

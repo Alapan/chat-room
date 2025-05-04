@@ -44,8 +44,7 @@ export default function ChatRoomPage() {
             <p className="mb-6">{chatRoom.description}</p>
             {/* Messages history */}
 
-            <InputMessageBox onClickAction={() => {
-            }}></InputMessageBox>
+            <InputMessageBox onClickAction={() => {}}></InputMessageBox>
         </div>
     );
 }

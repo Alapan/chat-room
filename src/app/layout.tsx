@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 import './globals.css';
+import { Header } from './components/Header';
 
 export const metadata: Metadata = {
   title: 'ChatHub',
@@ -17,7 +18,8 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        {children}
+        <Header />
+        <main className='flex-grow'>{children}</main>
       </body>
     </html>
   );
