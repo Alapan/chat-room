@@ -6,6 +6,7 @@ import { Button } from '../components/Button';
 import { registerUserSchema } from '../common/registerSchema';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
+import { hasFieldError } from '../utils/helpers';
 
 export default function Register () {
   const [ name, setName ] = useState<string>('');
@@ -15,6 +16,7 @@ export default function Register () {
   const [ error, setError ] = useState<string>('');
   const [ showSuccessMessage, setShowSuccessMessage ] = useState<boolean>(false);
   const [ isLoading, setIsLoading ] = useState(false);
+  const [ errorFields, setErrorFields ] = useState<string[]>([]);
 
   const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ export default function Register () {
       ).join('\n');
 
       setError(errors);
+      setErrorFields(Object.keys(result.error.formErrors.fieldErrors));
       setIsLoading(false);
       return;
     }
@@ -58,9 +61,15 @@ export default function Register () {
       } else {
         setShowSuccessMessage(true);
         setError('');
+        setErrorFields([]);
+        setName('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
       }
     } catch (error) {
-      setError((error as any).message);
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -79,6 +88,7 @@ export default function Register () {
           label='Name'
           onChange={(value: string) => setName(value)}
           value={name}
+          hasError={hasFieldError('name', errorFields)}
         />
       </div>
       <div className='w-full max-w-lg min-w-md'>
@@ -87,6 +97,7 @@ export default function Register () {
           onChange={(value: string) => setEmail(value)}
           value={email}
           type='email'
+          hasError={hasFieldError('email', errorFields)}
         />
       </div>
       <div className='w-full max-w-lg min-w-md'>
@@ -95,6 +106,7 @@ export default function Register () {
           onChange={(value: string) => setPassword(value)}
           value={password}
           type='password'
+          hasError={hasFieldError('password', errorFields)}
         />
       </div>
       <div className='w-full max-w-lg min-w-md'>
@@ -103,6 +115,7 @@ export default function Register () {
           onChange={(value: string) => setConfirmPassword(value)}
           value={confirmPassword}
           type='password'
+          hasError={hasFieldError('confirmPassword', errorFields)}
         />
       </div>
       <LoadingIndicator isLoading={isLoading} loadingText='Registering ...' />

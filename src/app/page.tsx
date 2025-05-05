@@ -23,6 +23,7 @@ export default function Home() {
   }, [isMovingInput]);
 
   const handleClick = () => {
+    console.log('Navigating to login...');
     router.push('/login');
   }
 
