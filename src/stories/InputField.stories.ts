@@ -1,4 +1,6 @@
+import { ComponentProps } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+
 import { InputField } from '@/app/components/InputField';
 
 export default {
@@ -22,7 +24,7 @@ export default {
 } as Meta<typeof InputField>;
 
 type Story = StoryObj<typeof InputField>;
-type InputFieldProps = React.ComponentProps<typeof InputField>;
+type InputFieldProps = ComponentProps<typeof InputField>;
 
 export const Default: Story = {
   args: {
@@ -30,4 +32,4 @@ export const Default: Story = {
     value: '',
     onChange: (value: string) => console.log('Input changed:', value),
   } as InputFieldProps,
-} as Story;
+};

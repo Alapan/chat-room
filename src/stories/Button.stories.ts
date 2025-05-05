@@ -1,4 +1,6 @@
+import { ComponentProps } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Button } from '@/app/components/Button';
 
 export default {
@@ -18,14 +20,14 @@ export default {
 } as Meta<typeof Button>;
 
 type Story = StoryObj<typeof Button>;
-type ButtonProps = React.ComponentProps<typeof Button>;
+type ButtonProps = ComponentProps<typeof Button>;
 
 export const Default: Story = {
   args: {
     label: 'Label 1',
     onClick: () => console.log('Clicked!')
   } as ButtonProps,
-} as Story;
+};
 
 export const CustomColor: Story = {
   args: {
@@ -33,7 +35,7 @@ export const CustomColor: Story = {
     onClick: () => console.log('Clicked!'),
     buttonColor: 'bg-blue-500 text-white',
   } as ButtonProps,
-} as Story;
+};
 
 export const Disabled: Story = {
   args: {
@@ -42,4 +44,4 @@ export const Disabled: Story = {
     buttonColor: 'bg-blue-500 text-white',
     isDisabled: true,
   } as ButtonProps
-} as Story;
+};
