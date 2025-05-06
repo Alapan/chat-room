@@ -19,6 +19,14 @@ export default {
     value: {
       control: 'text',
       description: 'Value of the input field',
+    },
+    type: {
+      control: 'text',
+      description: 'Type of information in this field',
+    },
+    hasError: {
+      control: 'boolean',
+      description: 'Indicates if the field has an error',
     }
   }
 } as Meta<typeof InputField>;
@@ -28,8 +36,18 @@ type InputFieldProps = ComponentProps<typeof InputField>;
 
 export const Default: Story = {
   args: {
-    label: 'Input Field',
+    label: 'Input field',
     value: '',
     onChange: (value: string) => console.log('Input changed:', value),
+  } as InputFieldProps,
+};
+
+export const ErrorField: Story = {
+  args: {
+    label: 'Input field with error',
+    value: '',
+    onChange: (value: string) => console.log('Input changed:', value),
+    type: 'text',
+    hasError: true,
   } as InputFieldProps,
 };

@@ -7,11 +7,13 @@ import { Button } from '../components/Button';
 import { loginSchema } from '../common/loginSchema';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
+import { hasFieldError } from '../utils/helpers';
 
 export default function Login() {
   const [ email, setEmail ] = useState<string>('');
   const [ password, setPassword ] = useState<string>('');
   const [ error, setError ] = useState<string>('');
+  const [ errorFields, setErrorFields ] = useState<string[]>([]);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const router = useRouter();
 
@@ -29,6 +31,7 @@ export default function Login() {
       ).join('\n');
 
       setError(errors);
+      setErrorFields(Object.keys(result.error.formErrors.fieldErrors));
       setIsLoading(false);
       return;
     }
@@ -45,17 +48,23 @@ export default function Login() {
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        setError('Error logging in! Please check your credentials and try again.');
+        setError(data.error || 'Error logging in! Please check your credentials and try again.');
+        setErrorFields([]);
         return false;
       }
-      const data = await response.json();
+
+      setEmail('');
+      setPassword('');
       setError('');
+      setErrorFields([]);
       console.log('Logged in successfully: ', data.token);
       router.push('/chatrooms');
     } catch (error) {
-      setError((error as any).message);
-      return false;
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -72,6 +81,7 @@ export default function Login() {
           onChange={(value: string) => setEmail(value)}
           value={email}
           type='email'
+          hasError={hasFieldError('email', errorFields)}
         />
       </div>
       <div className='w-full max-w-lg min-w-md'>
@@ -80,6 +90,7 @@ export default function Login() {
           onChange={(value: string) => setPassword(value)}
           value={password}
           type='password'
+          hasError={hasFieldError('password', errorFields)}
         />
       </div>
       <LoadingIndicator isLoading={isLoading} loadingText='Logging you in ...' />
