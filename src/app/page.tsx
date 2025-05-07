@@ -10,10 +10,10 @@ export default function Home() {
   const { rive, RiveComponent} = useRive({
     src: '/chat.riv',
     autoplay: true,
-    artboard: 'Artboard',
-    stateMachines: ['State Machine 1'],
+    artboard: 'Main Artboard',
+    stateMachines: ['Main'],
   });
-  const isMovingInput = useStateMachineInput(rive, 'State Machine 1', 'isMoving');
+  const isMovingInput = useStateMachineInput(rive, 'Main', 'isMoving');
   const router = useRouter();
 
   useEffect(() => {
