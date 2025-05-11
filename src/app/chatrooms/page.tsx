@@ -21,7 +21,7 @@ export default async function ChatRooms() {
           <div className='w-full max-w-3xl flex flex-col justify-center gap-4'>
             {chatRooms.length > 0 ? (
               chatRooms.map((room) => (
-                <Link href={`/chatroom/${room.id}`} key={room.id}>
+                <Link href={`/chatrooms/${room.id}`} key={room.id}>
                   <ListItem topic={room.topic} description={room.description} />
                 </Link>
               ))

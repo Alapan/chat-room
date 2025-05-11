@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
+import { Header } from './layout/Header';
 import './globals.css';
-import { Header } from './components/Header';
+import Providers from './Providers';
 
 export const metadata: Metadata = {
   title: 'ChatHub',
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <Header />
-        <main className='flex-grow'>{children}</main>
+        <Providers>
+          <Header />
+          <main className='flex-grow'>{children}</main>
+        </Providers>
       </body>
     </html>
   );

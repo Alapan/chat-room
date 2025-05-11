@@ -35,6 +35,7 @@ To update database schema, copy the `.env.example` as `.env`, fill the database 
 - [x] Landing Page
 - [x] Login
 - [x] Register
+- [x] Logout
 - [ ] Forgot Password
 - [x] Default Chat Rooms
 - [ ] Load Chat Room Messages
