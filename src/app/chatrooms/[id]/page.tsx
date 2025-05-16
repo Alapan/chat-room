@@ -6,6 +6,7 @@ import { ChatRoom } from '@/app/types';
 import { InputMessageBox } from '@/app/components/InputMessageBox';
 import { LoadingIndicator } from '@/app/components/LoadingIndicator';
 import { useAppSelector } from '@/app/state/hooks';
+import { selectAuthLoading, selectIsAuthenticated } from '@/app/state/slices/authSlice';
 
 export default function ChatRoomPage() {
   const params = useParams();
@@ -14,14 +15,16 @@ export default function ChatRoomPage() {
   const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const authLoading = useAppSelector(selectAuthLoading);
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!authLoading && !isAuthenticated) {
       router.push('/login');
     }
-  }, []);
+  }, [authLoading, isAuthenticated, router]);
 
   useEffect(() => {
     const fetchChatRoom = async () => {
@@ -41,10 +44,12 @@ export default function ChatRoomPage() {
       }
     };
 
-    fetchChatRoom();
-  }, [id]);
+    if (!authLoading && isAuthenticated) {
+      fetchChatRoom();
+    }
+  }, [id, authLoading, isAuthenticated]);
 
-  if (isLoading) return <LoadingIndicator isLoading={isLoading} loadingText='Loading chat room...'/>
+  if (authLoading || isLoading) return <LoadingIndicator isLoading={isLoading} loadingText='Loading chat room...'/>
   if (error) return <div className="text-center text-red-500">{error}</div>;
   if (!chatRoom) return <div className="text-center">Chat room not found</div>;
 

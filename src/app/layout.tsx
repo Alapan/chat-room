@@ -5,6 +5,7 @@ config.autoAddCss = false;
 import { Header } from './layout/Header';
 import './globals.css';
 import Providers from './Providers';
+import ServerAuthProvider from './components/ServerAuthProvider';
 
 export const metadata: Metadata = {
   title: 'ChatHub',
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <Providers>
+          <ServerAuthProvider />
           <Header />
           <main className='flex-grow'>{children}</main>
         </Providers>
