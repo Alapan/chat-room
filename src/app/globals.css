@@ -27,6 +27,7 @@
 }
 
 @theme inline {
+  --color-grey: #f4f4f4;
   --color-green: #24b750;
 }
 

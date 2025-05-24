@@ -8,6 +8,8 @@ import { loginSchema } from '../common/loginSchema';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { hasFieldError } from '../utils/helpers';
+import { useAppDispatch } from '../state/hooks';
+import { setAuthState } from '../state/slices/authSlice';
 
 export default function Login() {
   const [ email, setEmail ] = useState<string>('');
@@ -15,7 +17,9 @@ export default function Login() {
   const [ error, setError ] = useState<string>('');
   const [ errorFields, setErrorFields ] = useState<string[]>([]);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
+
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -60,7 +64,7 @@ export default function Login() {
       setPassword('');
       setError('');
       setErrorFields([]);
-      console.log('Logged in successfully: ', data.token);
+      dispatch(setAuthState(true));
       router.push('/chatrooms');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';

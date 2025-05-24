@@ -1,8 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {PrismaClient} from "@prisma/client";
 import {z} from "zod";
-import {authenticate} from "@/middleware/auth";
-
+import { verifyToken } from "@/app/api/auth/utils";
 
 interface ChatMessageRequest {
     text: string;
@@ -51,7 +50,7 @@ export async function GET(_: NextRequest, context: { params: { id: string } }) {
 
 export async function POST(request: NextRequest, context: { params: { id: string } }) {
     try {
-        const user = await authenticate(request);
+        const user = verifyToken(request);
 
         if (!user || user instanceof NextResponse) {
             return user;
