@@ -9,7 +9,7 @@ import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { hasFieldError } from '../utils/helpers';
 import { useAppDispatch } from '../state/hooks';
-import { login } from '../state/slices/authSlice';
+import { setAuthState } from '../state/slices/authSlice';
 
 export default function Login() {
   const [ email, setEmail ] = useState<string>('');
@@ -64,7 +64,7 @@ export default function Login() {
       setPassword('');
       setError('');
       setErrorFields([]);
-      dispatch(login());
+      dispatch(setAuthState(true));
       router.push('/chatrooms');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';

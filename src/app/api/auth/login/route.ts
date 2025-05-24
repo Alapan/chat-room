@@ -51,7 +51,10 @@ export async function POST(request: NextRequest) {
     });
 
     const response = NextResponse.json({ message: 'User logged in successfully' });
-    response.cookies.set('token', token, { httpOnly: true, secure: true, path: '/', maxAge: 3600 })
+    response.cookies.set('token', JSON.stringify({
+      token,
+      expiry: Date.now() + 3600 * 1000,
+    }), { httpOnly: true, secure: true, path: '/', maxAge: 3600 });
     return response;
   } catch (error) {
     console.log(error);

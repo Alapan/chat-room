@@ -15,7 +15,6 @@ export default function ChatRoomPage() {
   const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const authLoading = useAppSelector(selectAuthLoading);
   const router = useRouter();

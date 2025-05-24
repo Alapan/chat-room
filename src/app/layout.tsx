@@ -5,7 +5,7 @@ config.autoAddCss = false;
 import { Header } from './layout/Header';
 import './globals.css';
 import Providers from './Providers';
-import ServerAuthProvider from './components/ServerAuthProvider';
+import ServerAuthProvider from './providers/ServerAuthProvider';
 
 export const metadata: Metadata = {
   title: 'ChatHub',

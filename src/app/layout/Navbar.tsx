@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { Button } from '../components/Button';
 import { useAppDispatch, useAppSelector } from '../state/hooks';
-import { logout } from '../state/slices/authSlice';
+import { setAuthState } from '../state/slices/authSlice';
 
 export const Navbar = () => {
 
@@ -30,7 +30,7 @@ export const Navbar = () => {
     if (!response.ok) {
       console.error(data.error || 'Error logging out! Please try again.');
     } else {
-      dispatch(logout());
+      dispatch(setAuthState(false));
       setShowMenu(false);
       setLogoutBtnLabel('Logout');
       router.replace('/');
