@@ -1,9 +1,8 @@
-import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { User } from '@/types/User';
+require('dotenv').config();
 
-export const verifyToken = (request: NextRequest) => {
-  const token = request.cookies.get('token')?.value;
+export const verifyToken = (token: string) => {
   if (!token) return null;
 
   const JWT_SECRET = process.env.JWT_SECRET;

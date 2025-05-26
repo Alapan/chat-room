@@ -3,7 +3,8 @@
 import { KeyboardEvent, useState } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons/faPaperPlane";
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons/faPaperPlane';
+import { Button } from './Button';
 
 interface InputMessageBoxProps {
   onClickAction: (message: string) => void;
@@ -41,30 +42,23 @@ export const InputMessageBox = ({ onClickAction }: InputMessageBoxProps) => {
   };
 
   return (
-    <div className='flex items-center justify-between p-4 rounded-md shadow-md'>
+    <div className='grid grid-rows-1 grid-cols-6 gap-2 rounded-md shadow-md'>
       <textarea
         placeholder='Type your message here...'
         aria-label='Message input'
-        className='w-full p-2 rounded-md border border-green focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent resize-none'
+        className='col-span-4 col-start-1 w-full p-2 rounded-md border border-green focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent resize-none'
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
         rows={1}
       />
-      <button
-        type='button'
-        className='bg-green text-white p-2 rounded focus:outline-none cursor-pointer'
-        onClick={() => setShowPicker(!showPicker)}
-      >😊
-      </button>
-      {showPicker && <EmojiPicker onEmojiClick={handleEmojiClick}/>}
-      <button
-        type='button'
-        className='bg-green text-white px-4 py-2 rounded focus:outline-none cursor-pointer'
-        onClick={handleSendClick}
-      >
-        <FontAwesomeIcon icon={faPaperPlane}/>
-      </button>
+      <div className='col-span-2 col-start-5 flex items-center justify-end gap-2'>
+        <Button onClick={() => setShowPicker(!showPicker)}>😊</Button>
+        {showPicker && <EmojiPicker onEmojiClick={handleEmojiClick}/>}
+        <Button onClick={handleSendClick}>
+          <FontAwesomeIcon icon={faPaperPlane}/>
+        </Button>
+      </div>
     </div>
   );
 }

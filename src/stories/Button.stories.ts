@@ -8,9 +8,11 @@ export default {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    label: {
-      control: 'text',
-      description: 'Button label'
+    children: {
+      options: ['Text'],
+      mapping: {
+        Text: 'Label 1',
+      }
     },
     onClick: {
       action: 'clicked',
@@ -24,22 +26,22 @@ type ButtonProps = ComponentProps<typeof Button>;
 
 export const Default: Story = {
   args: {
-    label: 'Label 1',
-    onClick: () => console.log('Clicked!')
+    children: 'Label 1',
+    onClick: () => console.log('Clicked!'),
   } as ButtonProps,
 };
 
 export const CustomColor: Story = {
   args: {
-    label: 'Label 1',
+    children: 'Label 1',
     onClick: () => console.log('Clicked!'),
-    buttonColor: 'bg-blue-500 text-white',
+    buttonColor: 'bg-red-500 text-white',
   } as ButtonProps,
 };
 
 export const Disabled: Story = {
   args: {
-    label: 'Label 1',
+    children: 'Label 1',
     onClick: () => console.log('Clicked!'),
     buttonColor: 'bg-blue-500 text-white',
     isDisabled: true,

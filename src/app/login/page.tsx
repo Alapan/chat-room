@@ -100,10 +100,7 @@ export default function Login() {
       <LoadingIndicator isLoading={isLoading} loadingText='Logging you in ...' />
       <ErrorMessage error={error} />
       <div className='m-auto mt-4 p-4 w-full max-w-sm'>
-        <Button
-          label='View chatrooms'
-          onClick={handleLogin}
-        />
+        <Button onClick={handleLogin}>View chatrooms</Button>
       </div>
     </form>
   );

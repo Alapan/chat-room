@@ -32,7 +32,7 @@ export default function Home() {
       <div className='flex flex-col justify-center item-center w-full size-140'>
         <RiveComponent/>
         <div className='m-auto mt-4 p-4 w-full max-w-sm'>
-          <Button label='Login' onClick={handleClick}/>
+          <Button onClick={handleClick}>Login</Button>
         </div>
         <span className='text-center text-gray-500 text-sm mt-2'>
           Don't have an account?<a href='/register' className='text-green hover:text-green font-bold'> Register.</a>

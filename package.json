@@ -9,7 +9,8 @@
     "lint": "next lint",
     "seed": "npx prisma db seed",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "socket.io": "nodemon --watch src/socketIo/server.ts --exec tsx src/socketIo/server.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -18,13 +19,21 @@
     "@prisma/client": "^6.6.0",
     "@reduxjs/toolkit": "^2.8.1",
     "@rive-app/react-canvas": "^4.19.0",
+    "@types/socket.io-client": "^1.4.36",
     "bcrypt": "^5.1.1",
+    "cookie": "^1.0.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "next": "15.3.1",
     "prisma": "^6.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "zod": "^3.24.3"
   },
   "devDependencies": {
@@ -42,6 +51,7 @@
     "@storybook/test": "^8.6.12",
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -52,6 +62,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "eslint-plugin-storybook": "^0.12.0",
+    "nodemon": "^3.1.10",
     "playwright": "^1.52.0",
     "storybook": "^8.6.12",
     "tailwindcss": "^4",

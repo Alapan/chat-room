@@ -1,6 +1,6 @@
 export interface ChatRoom {
-    id: number;
-    topic: string;
-    description: string;
-    image: string | null;
+  id: number;
+  topic: string;
+  description: string;
+  image: string | null;
 }

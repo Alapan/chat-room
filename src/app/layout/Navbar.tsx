@@ -64,7 +64,9 @@ export const Navbar = () => {
         <ul className='flex space-x-4 mr-4'>
           {isAuthenticated && (
             <li>
-              <Button label={logoutBtnLabel} onClick={handleLogout}/>
+              <Button onClick={handleLogout}>
+                {logoutBtnLabel}
+              </Button>
             </li>
           )}
         </ul>

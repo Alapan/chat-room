@@ -50,7 +50,7 @@ export async function GET(_: NextRequest, context: { params: { id: string } }) {
 
 export async function POST(request: NextRequest, context: { params: { id: string } }) {
     try {
-        const user = verifyToken(request);
+        const user = verifyToken(request.cookies.get('token')?.value || '');
 
         if (!user || user instanceof NextResponse) {
             return user;
