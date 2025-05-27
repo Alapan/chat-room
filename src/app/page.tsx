@@ -28,18 +28,16 @@ export default function Home() {
   }
 
   return (
-    <main className='container w-full mx-auto flex flex-col h-screen mt-4 mb-6'>
-      <div className='mx-6'>
-        <div className='flex flex-col justify-center item-center m-auto my-8 w-full size-140'>
-          <RiveComponent/>
-          <div className='m-auto mt-4 p-4 w-full max-w-sm'>
-            <Button label='Login' onClick={handleClick}/>
-          </div>
-          <span className='text-center text-gray-500 text-sm mt-2'>
-            Don't have an account?<a href='/register' className='text-green hover:text-green font-bold'> Register.</a>
-          </span>
+    <div className='container w-full mx-auto flex flex-col h-screen mb-6'>
+      <div className='flex flex-col justify-center item-center w-full size-140'>
+        <RiveComponent/>
+        <div className='m-auto mt-4 p-4 w-full max-w-sm'>
+          <Button label='Login' onClick={handleClick}/>
         </div>
+        <span className='text-center text-gray-500 text-sm mt-2'>
+          Don't have an account?<a href='/register' className='text-green hover:text-green font-bold'> Register.</a>
+        </span>
       </div>
-    </main>
+    </div>
   );
 }
