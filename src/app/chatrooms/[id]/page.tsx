@@ -2,11 +2,12 @@
 
 import {useEffect, useState} from 'react';
 import {useParams, useRouter} from 'next/navigation';
-import {ChatRoom} from '@/app/types';
+import {ChatMessageResponse, ChatMessageVM, ChatRoom} from '@/app/types';
 import {InputMessageBox} from '@/app/components/InputMessageBox';
 import {LoadingIndicator} from '@/app/components/LoadingIndicator';
 import {useAppSelector} from '@/app/state/hooks';
 import {selectAuthLoading, selectIsAuthenticated} from '@/app/state/slices/authSlice';
+import {ChatHistory} from "@/app/components/ChatHistory";
 
 export default function ChatRoomPage() {
     const params = useParams();
@@ -19,35 +20,69 @@ export default function ChatRoomPage() {
     const authLoading = useAppSelector(selectAuthLoading);
     const router = useRouter();
     const [sendingMessage, setSendingMessage] = useState(false);
+    const [userId, setUserId] = useState<number>(0);
+    const [chatMessages, setChatMessages] = useState<ChatMessageVM[]>([]);
 
     useEffect(() => {
         if (!authLoading && !isAuthenticated) {
             router.push('/login');
         }
+        getUserId();
     }, [authLoading, isAuthenticated, router]);
 
     useEffect(() => {
-        const fetchChatRoom = async () => {
-            try {
-                const response = await fetch(`/api/chatrooms/${id}`);
-                if (!response.ok) {
-                    setError('Failed to fetch chat room');
-                    return;
-                }
-                const data = await response.json();
-                setChatRoom(data);
-            } catch (err) {
-                setError('Error loading chat room');
-                console.error(err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
         if (!authLoading && isAuthenticated) {
             fetchChatRoom();
+            getChatHistory();
         }
     }, [id, authLoading, isAuthenticated]);
+
+    const fetchChatRoom = async () => {
+        try {
+            const response = await fetch(`/api/chatrooms/${id}`);
+            if (!response.ok) {
+                setError('Failed to fetch chat room');
+                return;
+            }
+            const data = await response.json();
+            setChatRoom(data);
+        } catch (err) {
+            setError('Error loading chat room');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const getUserId = async () => {
+        const response = await fetch("/api/user");
+        if (!response.ok) {
+            return;
+        }
+
+        const userData = await response.json();
+        console.log(userData);
+        setUserId(userData.id);
+    };
+
+    const getChatHistory = async () => {
+        const response = await fetch(`/api/chatrooms/${id}/chats`);
+        if (!response.ok) {
+            return;
+        }
+
+        const messages = await response.json();
+        const messagesVM: ChatMessageVM[] = messages.map((message: ChatMessageResponse) => {
+            return {
+                id: message.id,
+                text: message.text,
+                userId: message.userId,
+                sentAt: message.sentAt,
+                sentBy: message.sentBy.email,
+            }
+        })
+        setChatMessages(messagesVM);
+    };
 
     const sendMessage = async (message: string) => {
         setSendingMessage(true);
@@ -90,7 +125,8 @@ export default function ChatRoomPage() {
         <div className="p-8">
             <h1 className="text-3xl font-bold mb-4">{chatRoom.topic}</h1>
             <p className="mb-6">{chatRoom.description}</p>
-            {/* Messages history */}
+
+            <ChatHistory currentUserId={userId} messages={chatMessages}></ChatHistory>
 
             <InputMessageBox onClickAction={sendMessage} sendingMessage={sendingMessage}></InputMessageBox>
         </div>

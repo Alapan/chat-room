@@ -1,18 +1,11 @@
 import {NextRequest, NextResponse} from "next/server";
 import {PrismaClient} from "@prisma/client";
-import { verifyToken } from "@/app/api/auth/utils";
+import {verifyToken} from "@/app/api/auth/utils";
 import {messageSchema} from "@/app/common/messageSchema";
+import {ChatMessageResponse} from "@/app/types";
 
 interface ChatMessageRequest {
     text: string;
-}
-
-interface ChatMessageResponse {
-    id: number;
-    chatRoomId: number;
-    userId: number;
-    text: string;
-    sentAt: Date;
 }
 
 export async function GET(_: NextRequest, context: { params: { id: string } }) {
@@ -30,6 +23,11 @@ export async function GET(_: NextRequest, context: { params: { id: string } }) {
                 userId: true,
                 text: true,
                 sentAt: true,
+                sentBy: {
+                    select: {
+                        email: true
+                    }
+                }
             },
         });
         if (!chatMessages) {
