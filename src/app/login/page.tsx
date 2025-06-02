@@ -10,13 +10,14 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { hasFieldError } from '../utils/helpers';
 import { useAppDispatch } from '../state/hooks';
 import { setAuthState } from '../state/slices/authSlice';
+import Link from 'next/link';
 
 export default function Login() {
-  const [ email, setEmail ] = useState<string>('');
-  const [ password, setPassword ] = useState<string>('');
-  const [ error, setError ] = useState<string>('');
-  const [ errorFields, setErrorFields ] = useState<string[]>([]);
-  const [ isLoading, setIsLoading ] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [errorFields, setErrorFields] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -30,9 +31,7 @@ export default function Login() {
     });
 
     if (!result.success) {
-      const errors = result.error.errors.map(
-        (error, i) => `${i + 1}. ${error.message}`
-      ).join('\n');
+      const errors = result.error.errors.map((error, i) => `${i + 1}. ${error.message}`).join('\n');
 
       setError(errors);
       setErrorFields(Object.keys(result.error.formErrors.fieldErrors));
@@ -44,7 +43,7 @@ export default function Login() {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email,
@@ -75,36 +74,39 @@ export default function Login() {
   };
 
   return (
-    <form className='flex flex-col items-center justify-center h-screen mt-10'>
-      <div className='flex flex-row justify-center text-2xl mt-2'>
-        <span className='font-bold'>Login</span>
+    <div className="flex flex-col items-center h-screen mt-10">
+      <form>
+        <div className="flex flex-row justify-center text-2xl mt-2">
+          <span className="font-bold">Login</span>
+        </div>
+        <div className="w-full max-w-lg min-w-md">
+          <InputField
+            label="Email"
+            onChange={(value: string) => setEmail(value)}
+            value={email}
+            type="email"
+            hasError={hasFieldError('email', errorFields)}
+          />
+        </div>
+        <div className="w-full max-w-lg min-w-md">
+          <InputField
+            label="Password"
+            onChange={(value: string) => setPassword(value)}
+            value={password}
+            type="password"
+            hasError={hasFieldError('password', errorFields)}
+          />
+        </div>
+        <LoadingIndicator isLoading={isLoading} loadingText="Logging you in ..." />
+        <ErrorMessage error={error} />
+        <div className="m-auto mt-4 p-4 w-full max-w-sm">
+          <Button label="View chatrooms" onClick={handleLogin} />
+        </div>
+      </form>
+
+      <div className="flex flex-row items-center mt-4">
+        New User?&nbsp;<Link href={'/register'}>Register here</Link>
       </div>
-      <div className='w-full max-w-lg min-w-md'>
-        <InputField
-          label='Email'
-          onChange={(value: string) => setEmail(value)}
-          value={email}
-          type='email'
-          hasError={hasFieldError('email', errorFields)}
-        />
-      </div>
-      <div className='w-full max-w-lg min-w-md'>
-        <InputField
-          label='Password'
-          onChange={(value: string) => setPassword(value)}
-          value={password}
-          type='password'
-          hasError={hasFieldError('password', errorFields)}
-        />
-      </div>
-      <LoadingIndicator isLoading={isLoading} loadingText='Logging you in ...' />
-      <ErrorMessage error={error} />
-      <div className='m-auto mt-4 p-4 w-full max-w-sm'>
-        <Button
-          label='View chatrooms'
-          onClick={handleLogin}
-        />
-      </div>
-    </form>
+    </div>
   );
-};
+}
