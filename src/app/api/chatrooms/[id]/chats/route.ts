@@ -1,25 +1,12 @@
 import {NextRequest, NextResponse} from "next/server";
 import {PrismaClient} from "@prisma/client";
-import {z} from "zod";
-import { verifyToken } from "@/app/api/auth/utils";
+import {verifyToken} from "@/app/api/auth/utils";
+import {messageSchema} from "@/app/common/messageSchema";
+import {ChatMessageResponse} from "@/app/types";
 
 interface ChatMessageRequest {
     text: string;
 }
-
-interface ChatMessageResponse {
-    id: number;
-    chatRoomId: number;
-    userId: number;
-    text: string;
-    sentAt: Date;
-}
-
-const postMessageSchema = z.object({
-    text: z.string()
-        .nonempty({message: "Message cannot be empty"})
-        .max(2000, {message: "Message cannot exceed 2000 characters"}),
-});
 
 export async function GET(_: NextRequest, context: { params: { id: string } }) {
     try {
@@ -36,6 +23,11 @@ export async function GET(_: NextRequest, context: { params: { id: string } }) {
                 userId: true,
                 text: true,
                 sentAt: true,
+                sentBy: {
+                    select: {
+                        email: true
+                    }
+                }
             },
         });
         if (!chatMessages) {
@@ -52,16 +44,16 @@ export async function POST(request: NextRequest, context: { params: { id: string
     try {
         const user = verifyToken(request);
 
-        if (!user || user instanceof NextResponse) {
-            return user;
+        if (user == null) {
+            return NextResponse.json({error: 'You need to login first'}, {status: 401});
         }
 
         const {id} = await context.params;
         const prisma = new PrismaClient();
 
-        // if (!id) {
-        //     return NextResponse.json({error: 'Chat room ID is required'}, {status: 400});
-        // }
+        if (!id) {
+            return NextResponse.json({error: 'Chat room ID is required'}, {status: 400});
+        }
 
         const body: ChatMessageRequest = await request.json();
 
@@ -71,7 +63,7 @@ export async function POST(request: NextRequest, context: { params: { id: string
         }
 
         // Model validation
-        const validationResult = postMessageSchema.safeParse(body);
+        const validationResult = messageSchema.safeParse(body);
         if (!validationResult.success) {
             const errors = validationResult.error.errors.map((error) => error.message);
             return NextResponse.json({error: errors}, {status: 400});
@@ -80,7 +72,6 @@ export async function POST(request: NextRequest, context: { params: { id: string
         const newMessage = await prisma.message.create({
             data: {
                 chatRoomId: parseInt(id),
-                // userId: parseInt(body.userId.toString()),
                 userId: user.id,
                 text: body.text,
                 sentAt: new Date(),
