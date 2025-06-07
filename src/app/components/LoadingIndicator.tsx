@@ -1,7 +1,7 @@
 interface LoadingIndicatorProps {
   isLoading: boolean;
-  loadingText: string;  
-};
+  loadingText: string;
+}
 
 export const LoadingIndicator = ({
   isLoading,
@@ -10,10 +10,10 @@ export const LoadingIndicator = ({
   return (
     <>
       {isLoading && (
-        <div className='w-full max-w-lg mt-4 mx-auto min-w-sm text-center'>
+        <div className="w-full max-w-lg mt-4 mx-auto min-w-sm text-center">
           {loadingText}
         </div>
       )}
     </>
-  )
+  );
 };

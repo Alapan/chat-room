@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
 interface ChatRoomRequest {
   params: {
     id: string;
-  }
+  };
 }
 
 export async function GET(_: NextRequest, params: ChatRoomRequest) {
@@ -12,7 +12,10 @@ export async function GET(_: NextRequest, params: ChatRoomRequest) {
     const { id } = await params.params;
     const prisma = new PrismaClient();
     if (!id) {
-      return NextResponse.json({ error: 'Chat room ID is required' }, { status: 400});
+      return NextResponse.json(
+        { error: "Chat room ID is required" },
+        { status: 400 },
+      );
     }
     const chatRoom = await prisma.chatRoom.findUnique({
       where: { id: parseInt(id) },
@@ -24,10 +27,16 @@ export async function GET(_: NextRequest, params: ChatRoomRequest) {
       },
     });
     if (!chatRoom) {
-      return NextResponse.json({ error: 'Chat room not found' }, { status: 404 });
+      return NextResponse.json(
+        { error: "Chat room not found" },
+        { status: 404 },
+      );
     }
     return NextResponse.json(chatRoom);
   } catch (error) {
-    return NextResponse.json({ error: 'Fetching chat room failed'}, { status: 500});
+    return NextResponse.json(
+      { "Fetching chat room failed": error },
+      { status: 500 },
+    );
   }
-};
+}

@@ -1,8 +1,7 @@
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-export async function GET(_: Request) {
+export async function GET() {
   try {
     const prisma = new PrismaClient();
     const chatRooms = await prisma.chatRoom.findMany({
@@ -15,6 +14,6 @@ export async function GET(_: Request) {
     });
     return NextResponse.json(chatRooms);
   } catch (error) {
-    return NextResponse.json({ error: 'Fetching chat rooms failed' }, { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
-};
+}

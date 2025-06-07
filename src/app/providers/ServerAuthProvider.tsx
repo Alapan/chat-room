@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers';
-import ClientAuthProvider from './ClientAuthProvider';
+import { cookies } from "next/headers";
+import ClientAuthProvider from "./ClientAuthProvider";
 
 export default async function ServerAuthProvider() {
-  const tokenCookie = (await cookies()).get('token')?.value || null;
+  const tokenCookie = (await cookies()).get("token")?.value || null;
 
   if (!tokenCookie) {
     return <ClientAuthProvider token={null} />;

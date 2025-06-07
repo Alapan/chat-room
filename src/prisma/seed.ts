@@ -1,61 +1,61 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function main () {
+async function main() {
   await prisma.chatRoom.deleteMany();
 
   const sport = await prisma.chatRoom.upsert({
-    where: { topic: 'sport'},
+    where: { topic: "sport" },
     update: {},
     create: {
-      topic: 'Sports',
-      image: 'sport',
-      description: 'Exciting sports news',
+      topic: "Sports",
+      image: "sport",
+      description: "Exciting sports news",
     },
   });
 
   const politics = await prisma.chatRoom.upsert({
-    where: { topic: 'politics' },
+    where: { topic: "politics" },
     update: {},
     create: {
-      topic: 'Politics',
-      image: 'politics',
-      description: 'Discuss political matters around the world',
+      topic: "Politics",
+      image: "politics",
+      description: "Discuss political matters around the world",
     },
   });
 
   const health = await prisma.chatRoom.upsert({
-    where: { topic: 'health' },
+    where: { topic: "health" },
     update: {},
     create: {
-      topic: 'Health and Fitness',
-      image: 'health',
-      description: 'All health and fitness related discussions',
+      topic: "Health and Fitness",
+      image: "health",
+      description: "All health and fitness related discussions",
     },
   });
 
   const movies = await prisma.chatRoom.upsert({
-    where: { topic: 'movies' },
+    where: { topic: "movies" },
     update: {},
     create: {
-      topic: 'Movies',
-      image: 'movie',
-      description: 'Everything related to cinema',
+      topic: "Movies",
+      image: "movie",
+      description: "Everything related to cinema",
     },
   });
 
   const books = await prisma.chatRoom.upsert({
-    where: { topic: 'books' },
+    where: { topic: "books" },
     update: {},
     create: {
-      topic: 'Books',
-      image: 'books',
-      description: 'All literary matters',
+      topic: "Books",
+      image: "books",
+      description: "All literary matters",
     },
-  })
+  });
 
-  console.log({ sport, politics, health, movies, books});
+  console.log({ sport, politics, health, movies, books });
 }
 
 main()
@@ -63,7 +63,7 @@ main()
     await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error('Error: ', e);
+    console.error("Error: ", e);
     await prisma.$disconnect();
     process.exit(1);
   });

@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 
-import { Button } from './components/Button';
-import Link from 'next/link';
+import { Button } from "./components/Button";
+import Link from "next/link";
 
 export default function Home() {
   const { rive, RiveComponent } = useRive({
-    src: '/chat.riv',
+    src: "/chat.riv",
     autoplay: true,
-    artboard: 'Main Artboard',
-    stateMachines: ['Main'],
+    artboard: "Main Artboard",
+    stateMachines: ["Main"],
   });
-  const isMovingInput = useStateMachineInput(rive, 'Main', 'isMoving');
+  const isMovingInput = useStateMachineInput(rive, "Main", "isMoving");
   const router = useRouter();
 
   useEffect(() => {
@@ -24,8 +24,8 @@ export default function Home() {
   }, [isMovingInput]);
 
   const handleClick = () => {
-    console.log('Navigating to login...');
-    router.push('/login');
+    console.log("Navigating to login...");
+    router.push("/login");
   };
 
   return (
@@ -33,11 +33,14 @@ export default function Home() {
       <div className="flex flex-col justify-center item-center w-full size-140">
         <RiveComponent />
         <div className="m-auto mt-4 p-4 w-full max-w-sm">
-          <Button label="Login" onClick={handleClick} />
+          <Button onClick={handleClick}>Login</Button>
         </div>
         <span className="text-center text-gray-500 text-sm mt-2">
           Don&apos;t have an account?&nbsp;
-          <Link href="/register" className="text-green hover:text-green font-bold">
+          <Link
+            href="/register"
+            className="text-green hover:text-green font-bold"
+          >
             Register.
           </Link>
         </span>
