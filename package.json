@@ -8,6 +8,7 @@
     "format": "prettier --write .",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "seed": "npx prisma db seed",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
