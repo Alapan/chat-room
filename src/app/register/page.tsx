@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { InputField } from '../components/InputField';
-import { Button } from '../components/Button';
-import { registerUserSchema } from '../common/registerSchema';
-import { LoadingIndicator } from '../components/LoadingIndicator';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { hasFieldError } from '../utils/helpers';
-import Link from 'next/link';
+import { useState } from "react";
+import { InputField } from "../components/InputField";
+import { Button } from "../components/Button";
+import { registerUserSchema } from "../common/registerSchema";
+import { LoadingIndicator } from "../components/LoadingIndicator";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { hasFieldError } from "../utils/helpers";
+import Link from "next/link";
 
 export default function Register() {
-  const [name, setName] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [name, setName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorFields, setErrorFields] = useState<string[]>([]);
@@ -31,7 +31,9 @@ export default function Register() {
     });
 
     if (!result.success) {
-      const errors = result.error.errors.map((error, i) => `${i + 1}. ${error.message}`).join('\n');
+      const errors = result.error.errors
+        .map((error, i) => `${i + 1}. ${error.message}`)
+        .join("\n");
 
       setError(errors);
       setErrorFields(Object.keys(result.error.formErrors.fieldErrors));
@@ -40,10 +42,10 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name,
@@ -56,18 +58,19 @@ export default function Register() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Something went wrong! Try again.');
+        setError(data.error || "Something went wrong! Try again.");
       } else {
         setShowSuccessMessage(true);
-        setError('');
+        setError("");
         setErrorFields([]);
-        setName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
       setError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -88,7 +91,7 @@ export default function Register() {
             label="Name"
             onChange={(value: string) => setName(value)}
             value={name}
-            hasError={hasFieldError('name', errorFields)}
+            hasError={hasFieldError("name", errorFields)}
           />
         </div>
         <div className="w-full max-w-lg min-w-md">
@@ -97,7 +100,7 @@ export default function Register() {
             onChange={(value: string) => setEmail(value)}
             value={email}
             type="email"
-            hasError={hasFieldError('email', errorFields)}
+            hasError={hasFieldError("email", errorFields)}
           />
         </div>
         <div className="w-full max-w-lg min-w-md">
@@ -106,7 +109,7 @@ export default function Register() {
             onChange={(value: string) => setPassword(value)}
             value={password}
             type="password"
-            hasError={hasFieldError('password', errorFields)}
+            hasError={hasFieldError("password", errorFields)}
           />
         </div>
         <div className="w-full max-w-lg min-w-md">
@@ -115,17 +118,17 @@ export default function Register() {
             onChange={(value: string) => setConfirmPassword(value)}
             value={confirmPassword}
             type="password"
-            hasError={hasFieldError('confirmPassword', errorFields)}
+            hasError={hasFieldError("confirmPassword", errorFields)}
           />
         </div>
         <LoadingIndicator isLoading={isLoading} loadingText="Registering ..." />
         {showSuccessMessage && (
           <div className="w-full max-w-lg mt-4 mx-auto min-w-sm text-center">
-            Registration successful. Please{' '}
+            Registration successful. Please{" "}
             <a href="/login" className="text-green font-bold">
-              {' '}
+              {" "}
               login
-            </a>{' '}
+            </a>{" "}
             now to visit the chatrooms 😊.
           </div>
         )}
@@ -136,7 +139,7 @@ export default function Register() {
       </form>
 
       <div className="flex flex-row items-center mt-4">
-        Already have an account?&nbsp;<Link href={'/login'}>Login here</Link>
+        Already have an account?&nbsp;<Link href={"/login"}>Login here</Link>
       </div>
     </div>
   );

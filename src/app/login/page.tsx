@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { InputField } from '../components/InputField';
-import { Button } from '../components/Button';
-import { loginSchema } from '../common/loginSchema';
-import { LoadingIndicator } from '../components/LoadingIndicator';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { hasFieldError } from '../utils/helpers';
-import { useAppDispatch } from '../state/hooks';
-import { setAuthState } from '../state/slices/authSlice';
-import Link from 'next/link';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { InputField } from "../components/InputField";
+import { Button } from "../components/Button";
+import { loginSchema } from "../common/loginSchema";
+import { LoadingIndicator } from "../components/LoadingIndicator";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { hasFieldError } from "../utils/helpers";
+import { useAppDispatch } from "../state/hooks";
+import { setAuthState } from "../state/slices/authSlice";
+import Link from "next/link";
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [errorFields, setErrorFields] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -31,7 +31,9 @@ export default function Login() {
     });
 
     if (!result.success) {
-      const errors = result.error.errors.map((error, i) => `${i + 1}. ${error.message}`).join('\n');
+      const errors = result.error.errors
+        .map((error, i) => `${i + 1}. ${error.message}`)
+        .join("\n");
 
       setError(errors);
       setErrorFields(Object.keys(result.error.formErrors.fieldErrors));
@@ -40,10 +42,10 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email,
@@ -54,19 +56,23 @@ export default function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Error logging in! Please check your credentials and try again.');
+        setError(
+          data.error ||
+            "Error logging in! Please check your credentials and try again.",
+        );
         setErrorFields([]);
         return false;
       }
 
-      setEmail('');
-      setPassword('');
-      setError('');
+      setEmail("");
+      setPassword("");
+      setError("");
       setErrorFields([]);
       dispatch(setAuthState(true));
-      router.push('/chatrooms');
+      router.push("/chatrooms");
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
       setError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -85,7 +91,7 @@ export default function Login() {
             onChange={(value: string) => setEmail(value)}
             value={email}
             type="email"
-            hasError={hasFieldError('email', errorFields)}
+            hasError={hasFieldError("email", errorFields)}
           />
         </div>
         <div className="w-full max-w-lg min-w-md">
@@ -94,18 +100,24 @@ export default function Login() {
             onChange={(value: string) => setPassword(value)}
             value={password}
             type="password"
-            hasError={hasFieldError('password', errorFields)}
+            hasError={hasFieldError("password", errorFields)}
           />
         </div>
-        <LoadingIndicator isLoading={isLoading} loadingText="Logging you in ..." />
+        <LoadingIndicator
+          isLoading={isLoading}
+          loadingText="Logging you in ..."
+        />
         <ErrorMessage error={error} />
         <div className="m-auto mt-4 p-4 w-full max-w-sm">
-          <Button label="View chatrooms" onClick={handleLogin} />
+          <Button onClick={handleLogin}>View chatrooms</Button>
         </div>
       </form>
 
       <div className="flex flex-row items-center mt-4">
-        New User?&nbsp;<Link href={'/register'}>Register here</Link>
+        New User?&nbsp;
+        <Link href={"/register"}>
+          Register <span className="text-green">here</span>
+        </Link>
       </div>
     </div>
   );

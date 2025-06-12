@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { setAuthState, setLoading } from '../state/slices/authSlice';
-import { useAppDispatch } from '../state/hooks';
+import { useEffect } from "react";
+import { setAuthState, setLoading } from "../state/slices/authSlice";
+import { useAppDispatch } from "../state/hooks";
 
 interface ClientAuthProviderProps {
   token: string | null;

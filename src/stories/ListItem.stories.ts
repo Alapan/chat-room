@@ -1,22 +1,22 @@
-import { ComponentProps } from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { ComponentProps } from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
-import { ListItem } from '@/app/components/ListItem';
+import { ListItem } from "@/app/components/ListItem";
 
 export default {
-  title: 'Components/ListItem',
+  title: "Components/ListItem",
   component: ListItem,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     topic: {
-      control: 'text',
-      description: 'The topic of the list item',
-      defaultValue: 'Sample topic',
+      control: "text",
+      description: "The topic of the list item",
+      defaultValue: "Sample topic",
     },
     description: {
-      control: 'text',
-      description: 'The description of the list item',
-      defaultValue: 'Sample description',
+      control: "text",
+      description: "The description of the list item",
+      defaultValue: "Sample description",
     },
   },
 } as Meta<typeof ListItem>;
@@ -26,22 +26,22 @@ type ListItemProps = ComponentProps<typeof ListItem>;
 
 export const Default: Story = {
   args: {
-    topic: 'Sample topic',
-    description: 'Sample description',
+    topic: "Sample topic",
+    description: "Sample description",
   } as ListItemProps,
 };
 
 export const LongTopic: Story = {
   args: {
-    topic: 'This is a very long topic that should be truncated',
-    description: 'Sample description',
+    topic: "This is a very long topic that should be truncated",
+    description: "Sample description",
   } as ListItemProps,
 };
 
 export const LongDescription: Story = {
   args: {
-    topic: 'Sample topic',
+    topic: "Sample topic",
     description:
-      'This is a very long description that should be truncated when it exceeds the maximum width of the container. This is a very long description that should be truncated when it exceeds the maximum width of the container.',
+      "This is a very long description that should be truncated when it exceeds the maximum width of the container. This is a very long description that should be truncated when it exceeds the maximum width of the container.",
   } as ListItemProps,
 };
